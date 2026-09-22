@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Offline design studio for Gravity Forms styling, notifications and confirmations.">
+  <title>Harwood Gravity Forms Design Studio</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">H</span><div><strong>Gravity Forms Design Studio</strong><small>Harwood Group Practice</small></div></div>
+    <div class="top-actions">
+      <span id="saveState" class="save-state" aria-live="polite">Saved locally</span>
+      <button id="undoBtn" class="icon-btn" title="Undo" aria-label="Undo">↶</button>
+      <button id="redoBtn" class="icon-btn" title="Redo" aria-label="Redo">↷</button>
+      <button id="exportGravityBtn" class="secondary" title="Create one JSON file to import into Gravity Forms">Export to Gravity Forms</button>
+      <button id="exportProjectBtn" class="secondary" title="Studio backup only — not for importing into WordPress">Save studio project</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <aside class="sidebar">
+      <section class="import-card">
+        <div class="step-label">FORM SOURCE</div>
+        <label class="file-button" for="fileInput"><span>＋</span> Import Gravity Forms JSON</label>
+        <input id="fileInput" type="file" accept=".json,application/json" hidden>
+        <p>Form definitions stay in this browser. No information is uploaded.</p>
+        <button id="loadDemoBtn" class="text-btn">Use demonstration forms</button>
+      </section>
+
+      <label class="control-label" for="formSelect">Current form</label>
+      <select id="formSelect" disabled><option>Import a form to begin</option></select>
+
+      <nav class="designer-nav" aria-label="Design areas">
+        <button class="nav-item active" data-view="form"><span class="nav-icon">▤</span><span>Live form<small>Scoped website styling</small></span></button>
+        <button class="nav-item" data-view="staff"><span class="nav-icon">✉</span><span>Staff email<small>Internal notification</small></span></button>
+        <button class="nav-item" data-view="patient"><span class="nav-icon">♡</span><span>Patient email<small>Receipt confirmation</small></span></button>
+        <button class="nav-item" data-view="confirmation"><span class="nav-icon">✓</span><span>On-screen message<small>After submission</small></span></button>
+      </nav>
+
+      <section class="theme-panel">
+        <div class="section-heading"><span>Theme</span><button id="themeMenuBtn" class="icon-btn small" aria-label="Theme actions">•••</button></div>
+        <select id="themeSelect"></select>
+        <div class="theme-actions">
+          <button id="saveThemeBtn" class="secondary compact">Save as new</button>
+          <button id="exportThemesBtn" class="secondary compact">Export</button>
+          <label class="secondary compact import-theme" for="themeFile">Import<input id="themeFile" type="file" accept=".json" hidden></label>
+        </div>
+        <button id="resetThemesBtn" class="text-btn danger theme-reset">Reset all themes to original</button>
+      </section>
+    </aside>
+
+    <section class="workspace">
+      <div id="emptyState" class="empty-state">
+        <div class="empty-art">GF</div>
+        <h1>Import your Gravity Forms export</h1>
+        <p>The studio will discover every form and build editing controls from its actual fields.</p>
+        <label class="primary large" for="fileInput">Choose JSON export</label>
+        <button id="emptyDemoBtn" class="secondary large">Explore a demonstration</button>
+        <div class="supported">Supports multi-form exports, including Gravity Forms’ numbered-object format</div>
+      </div>
+
+      <div id="editor" class="editor hidden">
+        <div class="editor-head">
+          <div><div class="eyebrow" id="viewEyebrow">LIVE FORM DESIGNER</div><h1 id="formTitle">Form title</h1><p id="formMeta"></p></div>
+          <div class="segmented" aria-label="Preview size"><button class="active" data-size="desktop">Desktop</button><button data-size="mobile">Mobile</button></div>
+        </div>
+
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-panel="style">Style</button>
+          <button class="tab" data-panel="fields">Fields <span id="fieldCountBadge"></span></button>
+          <button class="tab" data-panel="content">Content</button>
+          <button class="tab" data-panel="output">Copy code</button>
+        </div>
+
+        <div class="designer-grid">
+          <section class="controls-pane">
+            <div id="stylePanel" class="panel active">
+              <div class="panel-section"><div class="section-heading"><h2>Colour palette</h2><button id="resetColoursBtn" class="text-btn">Reset</button></div><div id="colourControls" class="colour-grid"></div></div>
+              <div class="panel-section"><h2>Shape &amp; spacing</h2><div class="range-grid">
+                <label>Corner radius <output id="radiusOut"></output><input id="radiusInput" type="range" min="0" max="24" step="1"></label>
+                <label>Spacing <output id="spacingOut"></output><input id="spacingInput" type="range" min="8" max="32" step="2"></label>
+                <label id="maxWidthWrap">Maximum width <output id="widthOut"></output><input id="widthInput" type="range" min="480" max="900" step="10"></label>
+                <label>Text scale <output id="fontOut"></output><input id="fontInput" type="range" min="90" max="120" step="1"></label>
+              </div></div>
+              <div class="panel-section"><h2>Style options</h2><div class="option-grid">
+                <label id="requiredStyleWrap" class="select-option"><span>Required-field indicator</span><select id="requiredStyleSelect"><option value="asterisk">Asterisk *</option><option value="badge">“Required” badge</option><option value="bar">Coloured side bar + “Required”</option><option value="text">Plain “Required” text</option></select></label>
+                <label id="requiredRadiusWrap" class="required-radius-control hidden"><span>Required badge rounding</span><output id="requiredRadiusOut">18px</output><input id="requiredRadiusInput" type="range" min="0" max="24" step="1" value="18"></label>
+                <label id="fullWidthWrap"><span>Full available width</span><input id="fullWidthToggle" type="checkbox" role="switch" checked></label>
+                <label><span>Panel shadow</span><input id="shadowToggle" type="checkbox" role="switch"></label>
+                <label><span>Strong field borders</span><input id="borderToggle" type="checkbox" role="switch"></label>
+                <label><span>Compact layout</span><input id="compactToggle" type="checkbox" role="switch"></label>
+              </div></div>
+            </div>
+
+            <div id="fieldsPanel" class="panel">
+              <div class="panel-section fields-section"><div class="section-heading"><div><h2>Field visibility &amp; order</h2><p id="fieldVisibilityHelp">Live form changes are also copied to both emails.</p></div><button id="resetOrderBtn" class="text-btn">Reset order</button></div>
+                <div class="bulk-row"><button data-bulk="all">Include all</button><button data-bulk="none">Exclude all</button><button data-bulk="required">Required only</button></div>
+                <div id="fieldList" class="field-list"></div>
+              </div>
+            </div>
+
+            <div id="contentPanel" class="panel">
+              <div class="panel-section"><h2>Headings and messages</h2><div class="text-controls">
+                <div id="subjectBuilder" class="subject-builder hidden"><label>Email subject<input id="subjectInput" type="text" placeholder="New request from {Patient name:1}"></label><label>Insert a submitted field<select id="subjectFieldSelect"><option value="">Choose a field…</option></select></label><small>Add as many fields as needed. Composite Name fields also offer separate First and Last values.</small></div>
+                <label>Heading<input id="headingInput" type="text"></label>
+                <label>Introductory text<textarea id="introInput" rows="3"></textarea></label>
+                <label id="buttonTextWrap">Submit button text<input id="buttonTextInput" type="text"></label>
+                <label id="noticeWrap">Notice or next steps<textarea id="noticeInput" rows="4"></textarea></label>
+              </div></div>
+              <div id="emailNotePanel" class="panel-section hidden">
+                <div class="section-heading"><div><h2>Optional note at the bottom</h2><p>Use a saved message or write one specifically for this email.</p></div><label class="switch-label"><span>Show note</span><input id="noteEnabledInput" type="checkbox" role="switch"></label></div>
+                <div id="noteEditor" class="note-editor">
+                  <label>Saved messages<select id="notePresetSelect"></select></label>
+                  <div class="text-controls">
+                    <label>Note heading<input id="noteTitleInput" type="text" placeholder="IMPORTANT!"></label>
+                    <label>Message<textarea id="noteMessageInput" rows="4" placeholder="Add useful information or an instruction..."></textarea></label>
+                  </div>
+                  <div class="note-actions"><button id="saveNotePresetBtn" class="secondary compact">Save message for later</button><button id="deleteNotePresetBtn" class="text-btn danger hidden">Delete saved message</button></div>
+                </div>
+              </div>
+              <div id="emailFooterPanel" class="panel-section hidden">
+                <h2>Email footer</h2>
+                <div class="text-controls">
+                  <label>Footer text<textarea id="emailFooterTextInput" rows="3"></textarea></label>
+                  <label>Alignment<select id="emailFooterAlignSelect"><option value="left">Left</option><option value="center">Centre</option><option value="right">Right</option></select></label>
+                </div>
+                <p class="muted">Use {date_dmy} to insert the date the form was submitted.</p>
+              </div>
+              <div class="panel-section"><h2>Preview values</h2><p class="muted">Sample values are for preview only and never alter the imported form.</p><div id="sampleControls" class="text-controls compact-fields"></div></div>
+            </div>
+
+            <div id="outputPanel" class="panel">
+              <div class="panel-section"><div class="section-heading"><div><h2 id="outputTitle">Scoped CSS</h2><p id="outputHelp">Paste this into a Custom HTML block on the same page as the form.</p></div><button id="copyOutputBtn" class="primary">Copy code</button></div>
+                <div id="scopeWarning" class="notice">The selectors are scoped to this form ID and will not affect other Gravity Forms.</div>
+                <div id="subjectOutputPanel" class="subject-output hidden"><label>Notification subject line<input id="subjectOutput" type="text" readonly></label><button id="copySubjectBtn" class="secondary compact">Copy subject</button></div>
+                <div id="testEmailPanel" class="test-email hidden">
+                  <div><strong>Send yourself a test</strong><span>Creates an editable email draft using the preview values.</span></div>
+                  <div class="test-email-actions"><label for="testEmailAddress" class="sr-only">Personal test email address</label><input id="testEmailAddress" type="email" autocomplete="email" placeholder="Personal email address"><button id="createTestEmailBtn" class="secondary">Create test email</button></div>
+                  <small>The studio does not send or upload anything. Open the downloaded draft in Outlook or your usual mail app, then press Send.</small>
+                </div>
+                <textarea id="codeOutput" class="code-output" readonly spellcheck="false"></textarea>
+              </div>
+            </div>
+          </section>
+
+          <section class="preview-pane">
+            <div class="preview-toolbar"><span><i></i> Live preview · updates as you edit</span><span id="previewLabel">Website form</span></div>
+            <div id="previewStage" class="preview-stage"><div id="previewFrame" class="preview-frame"></div></div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="themeDialog"><form method="dialog"><h2>Save reusable theme</h2><label>Theme name<input id="themeNameInput" required maxlength="60"></label><label>Description<textarea id="themeDescriptionInput" rows="3"></textarea></label><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirmSaveTheme" value="default" class="primary">Save theme</button></div></form></dialog>
+  <dialog id="resetThemesDialog"><form method="dialog"><h2>Reset all themes?</h2><p>This restores every built-in theme to its original design and removes your saved custom themes. Imported forms, field choices, email content and saved notes will not be deleted.</p><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirmResetThemes" value="default" class="primary">Reset all themes</button></div></form></dialog>
+  <dialog id="gravityExportDialog"><form method="dialog"><h2>Export to Gravity Forms</h2><label>Form title in Gravity Forms<input id="gravityExportTitleInput" required maxlength="150"></label><p class="muted">This is the title Gravity Forms will use after import. Changing only the downloaded filename does not change it.</p><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirmGravityExport" value="default" class="primary">Create import file</button></div></form></dialog>
+  <script src="js/app.js"></script>
+</body>
+</html>
