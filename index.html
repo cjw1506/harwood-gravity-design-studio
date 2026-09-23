@@ -136,8 +136,8 @@
             </div>
 
             <div id="outputPanel" class="panel">
-              <div class="panel-section"><div class="section-heading"><div><h2 id="outputTitle">Scoped CSS</h2><p id="outputHelp">Paste this into a Custom HTML block on the same page as the form.</p></div><button id="copyOutputBtn" class="primary">Copy code</button></div>
-                <div id="scopeWarning" class="notice">The selectors are scoped to this form ID and will not affect other Gravity Forms.</div>
+              <div class="panel-section"><div class="section-heading"><div><h2 id="outputTitle">Scoped CSS</h2><p id="outputHelp">After importing the JSON, paste this CSS into a Custom HTML block on the form page.</p></div><button id="copyOutputBtn" class="primary">Copy code</button></div>
+                <div id="scopeWarning" class="notice">The selectors use the Studio form class. Replace earlier CSS for this form to avoid competing rules.</div>
                 <div id="subjectOutputPanel" class="subject-output hidden"><label>Notification subject line<input id="subjectOutput" type="text" readonly></label><button id="copySubjectBtn" class="secondary compact">Copy subject</button></div>
                 <div id="testEmailPanel" class="test-email hidden">
                   <div><strong>Send yourself a test</strong><span>Creates an editable email draft using the preview values.</span></div>
@@ -161,7 +161,7 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <dialog id="themeDialog"><form method="dialog"><h2>Save reusable theme</h2><label>Theme name<input id="themeNameInput" required maxlength="60"></label><label>Description<textarea id="themeDescriptionInput" rows="3"></textarea></label><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirmSaveTheme" value="default" class="primary">Save theme</button></div></form></dialog>
   <dialog id="resetThemesDialog"><form method="dialog"><h2>Reset all themes?</h2><p>This restores every built-in theme to its original design and removes your saved custom themes. Imported forms, field choices, email content and saved notes will not be deleted.</p><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirmResetThemes" value="default" class="primary">Reset all themes</button></div></form></dialog>
-  <dialog id="gravityExportDialog"><form method="dialog"><h2>Export to Gravity Forms</h2><label>Form title in Gravity Forms<input id="gravityExportTitleInput" required maxlength="150"></label><p class="muted">This is the title Gravity Forms will use after import. Changing only the downloaded filename does not change it.</p><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirmGravityExport" value="default" class="primary">Create import file</button></div></form></dialog>
+  <dialog id="gravityExportDialog"><form method="dialog"><h2>Export to Gravity Forms</h2><label>Form title in Gravity Forms<input id="gravityExportTitleInput" required maxlength="150"></label><p class="muted">This is the title Gravity Forms will use after import. Copy the form CSS from the Copy code tab and add it to the page separately; Gravity Forms may remove styles embedded in an imported form.</p><div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="confirmGravityExport" value="default" class="primary">Create import file</button></div></form></dialog>
   <script src="js/app.js"></script>
 </body>
 </html>
