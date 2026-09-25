@@ -31,5 +31,6 @@
 .html-content-preview{width:100%;line-height:1.55}.html-content-preview>:first-child{margin-top:0}.html-content-preview>:last-child{margin-bottom:0}.html-content-preview ul,.html-content-preview ol{padding-left:1.4em}.html-content-preview a{color:var(--p-primary);text-decoration:underline}.builder-form label small{display:block;margin-top:5px;color:var(--muted);font-weight:400;line-height:1.45}
 @media(max-width:720px){.builder-grid,.logic-rule{grid-template-columns:1fr}.outline-add{flex-direction:column}}
 .preview-field{grid-column:span var(--field-span,12)}
+.preview-field>legend.gfield_label{float:left;width:100%}.preview-field>legend.gfield_label+*{clear:both}
 .preview-frame.mobile .practice365-card{padding:16px}.preview-frame.mobile .preview-field{grid-column:1/-1!important}.preview-frame.mobile .ginput_complex>.ginput_container{grid-column:1/-1}
 @media(max-width:720px){.practice365-card{padding:16px}.preview-field{grid-column:1/-1!important}.ginput_complex>.ginput_container{grid-column:1/-1}}
