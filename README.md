@@ -20,7 +20,7 @@ Gravity Forms does not natively model every possible chain of nested conditional
 
 Use **Export** in the Questions & Logic workspace (or **Export for Gravity Forms** in Copy code), then import the resulting single JSON file in WordPress under **Forms → Import/Export → Import Forms**. The package contains the form definition, notification and confirmation HTML, and a hidden Harwood Studio HTML field containing the scoped form CSS.
 
-The exported CSS uses an explicit Arial/Helvetica font stack, pixel-based type sizes, line heights, and weights so that the browser preview is not enlarged or emboldened by the WordPress theme. The **Fidelity** workspace explains which details remain browser- or theme-dependent.
+The live-form preview is based on the measured Practice365 frontend: Gravity Forms 2.10.5, its `gform-theme--no-framework` and NHS class structure, a 12-column field grid, composite field containers, Frutiger W01 with Arial fallback, and the published label/control/button metrics. Exported CSS uses the same selectors and pixel-based typography. The **Fidelity** workspace explains which details remain browser- or theme-dependent.
 
 ## Run locally
 
