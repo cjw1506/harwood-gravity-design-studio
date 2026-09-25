@@ -26,6 +26,7 @@
         <label class="file-button" for="fileInput"><span>＋</span> Import Gravity Forms JSON</label>
         <input id="fileInput" type="file" accept=".json,application/json" hidden>
         <p>Form definitions stay in this browser. No information is uploaded.</p>
+        <button id="newFormBtn" class="secondary compact source-action">Create blank form</button>
         <button id="loadDemoBtn" class="text-btn">Use demonstration forms</button>
       </section>
 
@@ -69,8 +70,10 @@
 
         <div class="tabs" role="tablist">
           <button class="tab active" data-panel="style">Style</button>
+          <button class="tab" data-panel="questions">Questions &amp; Logic</button>
           <button class="tab" data-panel="fields">Fields <span id="fieldCountBadge"></span></button>
           <button class="tab" data-panel="content">Content</button>
+          <button class="tab" data-panel="fidelity">Fidelity</button>
           <button class="tab" data-panel="output">Copy code</button>
         </div>
 
@@ -99,6 +102,14 @@
                 <div class="bulk-row"><button data-bulk="all">Include all</button><button data-bulk="none">Exclude all</button><button data-bulk="required">Required only</button></div>
                 <div id="fieldList" class="field-list"></div>
               </div>
+            </div>
+
+            <div id="questionsPanel" class="panel">
+              <div class="panel-section builder-actions"><button id="builderPreviewBtn" class="secondary compact">Preview</button><button id="builderValidateBtn" class="secondary compact">Validate</button><button id="builderSaveBtn" class="secondary compact">Save</button><button id="builderDuplicateFormBtn" class="secondary compact">Duplicate form</button><button id="builderExportBtn" class="primary compact">Export</button></div>
+              <div class="panel-section"><label class="control-label" for="builderFormTitle">Form title</label><input id="builderFormTitle" class="builder-title" maxlength="150"><div class="section-heading builder-outline-head"><div><h2>Form outline</h2><p>Pages, sections and questions appear in export order.</p></div><div class="outline-add"><select id="newFieldType"></select><button id="addFieldBtn" class="secondary compact">Add</button></div></div><div id="questionOutline" class="question-outline"></div></div>
+              <div id="questionEditor" class="panel-section question-editor"><p class="muted">Select an item to edit it.</p></div>
+              <div class="panel-section"><div class="section-heading"><div><h2>Route tester</h2><p>Choose answers to see what Gravity Forms will show and why.</p></div><button id="clearRouteBtn" class="text-btn">Clear</button></div><div id="routeAnswers" class="route-answers"></div><div id="routeResults" class="route-results"></div></div>
+              <div class="panel-section"><h2>Validation</h2><div id="validationResults" class="validation-results"><p class="muted">Select Validate to check the form before export.</p></div></div>
             </div>
 
             <div id="contentPanel" class="panel">
@@ -146,6 +157,11 @@
                 </div>
                 <textarea id="codeOutput" class="code-output" readonly spellcheck="false"></textarea>
               </div>
+            </div>
+
+            <div id="fidelityPanel" class="panel">
+              <div class="panel-section"><h2>Preview-to-WordPress fidelity</h2><p class="muted">This check identifies what the export controls and what may still be inherited from WordPress.</p><div id="fidelityResults" class="fidelity-results"></div></div>
+              <div class="panel-section"><h2>After importing into WordPress</h2><ol class="instruction-list"><li>Import the Gravity Forms JSON file.</li><li>Embed the form using the form block and select either Orbital or Gravity 2.5 consistently.</li><li>The exported form contains one hidden “Harwood Studio styling” HTML field that carries scoped CSS.</li><li>Publish the page, then compare desktop and mobile views. Theme fonts loaded outside the form can still differ unless the same font is available in both places.</li></ol></div>
             </div>
           </section>
 

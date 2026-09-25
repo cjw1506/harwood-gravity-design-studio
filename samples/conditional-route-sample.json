@@ -1,0 +1,57 @@
+{
+  "0": {
+    "id": 1,
+    "title": "Conditional route example",
+    "description": "A compact import used to test pages and conditional questions.",
+    "fields": [
+      {
+        "id": 1,
+        "formId": 1,
+        "type": "radio",
+        "label": "Who is this request for?",
+        "isRequired": true,
+        "choices": [
+          { "text": "Myself", "value": "Myself", "isSelected": false },
+          { "text": "Someone else", "value": "Someone else", "isSelected": false }
+        ]
+      },
+      {
+        "id": 2,
+        "formId": 1,
+        "type": "text",
+        "label": "Their full name",
+        "isRequired": true,
+        "conditionalLogic": {
+          "enabled": true,
+          "actionType": "show",
+          "logicType": "all",
+          "rules": [
+            { "fieldId": "1", "operator": "is", "value": "Someone else" }
+          ]
+        }
+      },
+      {
+        "id": 3,
+        "formId": 1,
+        "type": "page",
+        "label": "Request details",
+        "displayOnly": true,
+        "nextButton": { "type": "text", "text": "Next", "imageUrl": "", "conditionalLogic": null },
+        "previousButton": { "type": "text", "text": "Previous", "imageUrl": "" }
+      },
+      {
+        "id": 4,
+        "formId": 1,
+        "type": "textarea",
+        "label": "How can we help?",
+        "isRequired": true
+      }
+    ],
+    "button": { "type": "text", "text": "Submit" },
+    "confirmations": [],
+    "notifications": [],
+    "nextFieldId": 5,
+    "version": "2.10.5"
+  },
+  "version": "2.10.5"
+}
